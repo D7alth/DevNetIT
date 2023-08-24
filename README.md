@@ -1,4 +1,8 @@
-# vue-test
+# DevNetIT website
+
+A single page application making with just vue.js in your version 3.
+Working with a router schema dinamic for clints and projects, for it using the vue router library
+For carousel using swipper library. 
 
 ## Project setup
 ```
