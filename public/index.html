@@ -5,6 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>DevNet IT</title>
+    <style>
+      .swiper-button-next:after, .swiper-button-prev:after{
+        font-size: 20px !important;
+      }
+      .swiper-button-next, .swiper-button-prev {
+        position: absolute;
+        top: 90% !important;
+        width: calc(var(--swiper-navigation-size)/ 44 * 27);
+        height: var(--swiper-navigation-size);
+        margin-top: calc(0px - (var(--swiper-navigation-size)/ 2));
+        z-index: 10;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--swiper-navigation-color,var(--swiper-theme-color));
+      }
+      .swiper-button-prev {
+        left: 93% !important;
+        color: #FB8706 !important;
+      }
+      .swiper-button-next {
+        color: #FB8706 !important;
+      }
+
+      @media (max-width: 767px) {
+        .swiper-button-prev {
+        left: 75% !important;
+        color: #FB8706 !important;
+      }
+      .swiper-button-next, .swiper-button-prev {
+        position: absolute;
+        top: 96% !important;
+        width: calc(var(--swiper-navigation-size)/ 44 * 27);
+        height: var(--swiper-navigation-size);
+        margin-top: calc(0px - (var(--swiper-navigation-size)/ 2));
+        z-index: 10;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--swiper-navigation-color,var(--swiper-theme-color));
+      }
+      }
+    </style>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
