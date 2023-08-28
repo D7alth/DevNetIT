@@ -18,21 +18,34 @@
     galleryHeadline="Gallery"
     galleryCustomersHeadline="Gallery"
   /> 
+  <ExitPopup v-if="isPopupVisible" @close="closePopup">
+    <p class="headline-popup orange">Contact us</p>
+    <p class="description-popup white">Helping you overcome your any kind
+of technology challenges</p>
+    <p class="email-label">Email</p>
+    <a class="email-link" href="mailto:tiago@devnetti.com">tiago@devnetti.com</a>
+    <p class="phone-label">Phone</p>
+    <a class="phone-link" href="tel:(786) 483-0225">(786) 483-0225</a>
+    <a href="tel:(786) 483-0225" class="btn-filled btn-cta-fw-popup">Estimate Projects</a>
+  </ExitPopup>
 </template>
 
 <script>
 import HeaderSection from './sections/HeaderSection.vue'
 import FooterBottom from './sections/FooterBottom.vue';
 import FooterTop from './sections/FooterTop.vue';
+import ExitPopup from './components/popups/ExitPopup.vue';
 
 export default {
   components:{
     HeaderSection,
     FooterBottom,
-    FooterTop
+    FooterTop,
+    ExitPopup
   },
   data() {
     return {
+      isPopupVisible: false,
       socialTitle: "Connect with Us",
       socialIcons: 
       [
@@ -50,7 +63,25 @@ export default {
         },
       ],
     };
+    
   },
+  methods: {
+    showPopup() {
+      const popupShown = localStorage.getItem('popupShown');
+      if (!popupShown) {
+        localStorage.setItem('popupShown', 'true');
+        this.isPopupVisible = true;
+      }
+    },
+    closePopup() {
+      this.isPopupVisible = false;
+    }
+  },
+  mounted() {
+    document.addEventListener('mouseleave', () => {
+      this.showPopup();
+    });
+  }
 }
 </script>
 
@@ -58,13 +89,18 @@ export default {
 :root{
   --main-orange-color: #FD5901;
   --main-yellow-color: #FB8706;
+  --main-purple-color: #5532FB;
   --main-black-color: #01010F;
   --main-grey-color: #696a74;
   --main-white-color: #ffffff;
   --variant-light-grey-color: #adadad;
+  --variant-dark-white-color: #dcdce0;
 }
 *{
   font-family: 'DM Sans', sans-serif;
+}
+.orange{
+  color: var(--main-orange-color);
 }
 .bg-dark{
   background-color: var(--main-black-color) !important;
@@ -188,8 +224,27 @@ export default {
 .btn-bordered:hover {
   color: var(--main-black-color);
 }
-
-
+.headline-popup{
+  font-size: 60px;
+  color: var(--main-orange-color);
+  margin: 0px;
+}
+.description-popup{
+  color: var(--main-white-color);
+}
+.email-label, .phone-label{
+  margin: 0px;
+  color: white;
+}
+.email-link, .phone-link{
+  font-size: 20px;
+  color: #ffffff61;
+  margin-bottom: 18px;
+}
+.btn-cta-fw-popup{
+  width: 100%;
+  margin-top: 10px;
+}
 /* icons */
 .icon-circle {
   display: flex;
