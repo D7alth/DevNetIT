@@ -126,6 +126,7 @@ color: var(--main-white-color);
 }
 .custom-carousel {
   height: 330px;
+  margin-bottom: 70px;
 }
 
 .text-container {

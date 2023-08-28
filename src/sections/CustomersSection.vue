@@ -8,7 +8,7 @@
           />
       </div>
       <div class="cards-container">
-        <CardList v-for="customer in customers" :key="customer.id" :item="customer" />
+        <CardList v-for="card in customerData" :key="card.id" :item="card" />
       </div>
     </div>
   </div>  
@@ -27,7 +27,7 @@ export default {
   props: {
     hatText: String,
     headlineText: String,
-    customers: Array
+    customerData: Array
   },
 };
 </script>

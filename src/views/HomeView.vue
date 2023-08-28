@@ -32,7 +32,7 @@
   <CustomersSection 
       hatText="Our customers"
       headlineText="Lots of satisfied customers"
-      :customers = "customers"
+      :customerData="cards"
   />
   <ProjectsSection
       hatText="What’s happening"
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import axios from "axios";
 
 import HomeSection from './../sections/HeroSection.vue';
 import TechnologySection from './../sections/TechnologySection.vue';
@@ -80,6 +81,9 @@ export default {
   },
   data() {
     return {
+      cards: [],
+      projects: [],
+      testimonial: [],
       socialTitle: "Connect with Us",
       socialIcons: 
       [
@@ -96,184 +100,91 @@ export default {
           link: "https://instagram.com/" 
         },
       ],
-      customers: 
-      [
-        {
-          id: 1,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Customer 1",
-          hatText: "1",
-          headlineText: "Product development",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 2,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Website Development",
-          hatText: "2",
-          headlineText: "Website Development",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 3,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Mobile Development",
-          hatText: "3",
-          headlineText: "Mobile Development",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 4,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Marketing & Reporting",
-          hatText: "4",
-          headlineText: "Marketing & Reporting",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 5,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Customer 1",
-          hatText: "5",
-          headlineText: "Digital marketing",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 6,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Customer 1",
-          hatText: "6",
-          headlineText: "Content management",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 7,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Customer 1",
-          hatText: "7",
-          headlineText: "Data analysis",
-          descriptionText: "A design approach is a general philosophy that may not include a guide for specific methods",
-          moreLink: "#",
-          moreText: "More",
-        },
-      ],
-      projects: [
-      {
-          id: 1,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        }, 
-        {
-          id: 2,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 3,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 4,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"),
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 4,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-      ],
-      testimonial: [
-      {
-          id: 1,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          testimonialName: "Jonathon Rees",
-          testimonialOffice:"CEO at Coffee"
-        }, 
-        {
-          id: 2,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 3,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 4,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-        {
-          id: 4,
-          logoSrc: require("@/assets/customers-logo/ucari-logo.png"), 
-          logoAlt: "Project 1",
-          hatText: "Logo",
-          headlineText: "Project 1",
-          descriptionText: "Short description of Project 1.",
-          moreLink: "#",
-          moreText: "More",
-        },
-      ]
     };
+  },
+  created(){
+    this.getCustomers();
+    this.getProjects();
+    this.getTestimonial();
+  },
+  methods: {
+    getCustomers() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Customers&populate[2]=Customers.Cards&populate[3]=Customers.Cards.Featured_image&populate[4]=Customers.Cards.Link")
+      .then((response) => {
+        const cardsData = response.data.data.attributes.Customers.Cards;
+        const formattedCards = cardsData.map((card) => {
+          return {
+            id: card.Identity,
+            logoSrc: "http://192.168.0.157:1337" + card.Featured_image.data.attributes.url,
+            logoAlt: "Project " + card.Featured_image.data.attributes.name,
+            headlineText: card.Headline,
+            descriptionText: card.Description,
+            moreLink: "/projects/" + card.Identity,
+            moreText: "More ─",
+          };
+        });
+        console.log(cardsData);
+        this.cards = formattedCards;
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+    getProjects() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Projects&populate[2]=Projects.Cards&populate[3]=Projects.Cards.Featured_image&populate[4]=Projects.Cards.Link")
+      .then((response) => {
+        const projectsData = response.data.data.attributes.Projects;
+
+        if (projectsData && projectsData.Cards && Array.isArray(projectsData.Cards)) {
+          const formattedCards = projectsData.Cards.map((card) => {
+            return {
+              id: card.Identity,
+              logoSrc: "http://192.168.0.157:1337" + card.Featured_image.data.attributes.url,
+              logoAlt: "Project " + card.Featured_image.data.attributes.name,
+              headlineText: card.Headline,
+              descriptionText: card.Description,
+              moreLink: "/projects/" + card.Identity,
+              moreText: "More ─",
+            };
+          });
+
+          this.projects = formattedCards;
+        } else {
+          console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+    getTestimonial() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Testimonial&populate[2]=Testimonial.Cards&populate[3]=Testimonial.Cards.Icon")
+      .then((response) => {
+        const testimonialData = response.data.data.attributes.Testimonial;
+        console.log(testimonialData);
+
+        if (testimonialData && testimonialData.Cards && Array.isArray(testimonialData.Cards)) {
+          const formattedCards = testimonialData.Cards.map((card) => {
+            return {
+              id: card.id,
+              descriptionText: card.Description,
+              testimonialName : card.Testifies,
+              testimonialOffice: card.Position
+            };
+          });
+
+          this.testimonial = formattedCards;
+        } else {
+          console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
   },
 }
 </script>
