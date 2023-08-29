@@ -4,12 +4,12 @@
       <div class="columns">
         <div class="column col-md-12 col-6" v-if="!isDesktop">
           <div class="branding-image-container">
-            <img class="branding-image" src="./../assets/Branding-Showcase.png" alt="Branding Image" />
+            <img class="branding-image" :src="featureImage" alt="Branding Image" />
           </div>
         </div>
         <div class="column col-md-12 col-6" v-if="isDesktop">
           <div class="branding-image-container">
-            <img class="branding-image" src="./../assets/Branding-Showcase.png" alt="Branding Image" />
+            <img class="branding-image" :src="featureImage" alt="Branding Image" />
           </div>
         </div>
         <div class="column col-md-12 col-6">
@@ -50,6 +50,7 @@ export default {
     pointText1: String,
     pointText2: String,
     ctaButtonText: String,
+    featureImage: String
   },
   components: {
     TextBlock
