@@ -1,55 +1,53 @@
 <template>
-  <HomeSection />
+  <HomeSection 
+    :headlineText="heroHeadlineText"
+    :descriptionText="heroDescriptionText"
+    button1Text="Get in touch"
+    button2Text="Discover More"
+    :imageSourcePath="heroMediaUrl"
+  />
   <TechnologySection 
-      sectionTitle="Technologies"
-      sectionText="Over 10 years of experience in system developing using .NET, ASP.NET, MVC versions 4/5, C #, Azure platform, WEBSERVICE"
+      :sectionTitle="technologyHatText"
+      :sectionText="technologyDescription"
+      :logos="technologyGallery"
   />
   <BrandingSection 
-      hatText="Get to know us"
-      headlineText="We are adding extra value for your business"
-      descriptionText="With bootstrap, Material UI, React, responsive mega menu and various layouts including incredible blog themes, DevNet offers you unfathomable accessibility to have beautiful and customer-oriented websites."
-      pointText1="Agile and flexible development"
-      pointText2="The best sites and satisfaction guaranteed"
+      :hatText="brandingSectionHat"
+      :headlineText="brandingSectionHeadline"
+      :descriptionText="brandingSectionDescription"
+      :pointText1="IconList[0]"
+      :pointText2="IconList[1]"
+      :featureImage="brandingSectionFeaturedImage"
       ctaButtonText="Get In Touch"
   />
   <ServicesSection 
-      hatText="Services"
-      headlineText="Powerful Technologies to Turn Ideas into Reality"
-      descriptionText="Our team specializes in a wide range of cutting-edge technologies including Bootstrap, Material UI and React. We combine these powerful tools to create innovative digital solutions that delight our clients and drive exceptional results. Regardless of the challenge, we are ready to turn your ideas into reality."
-      card1hat="10+"
-      card1headline="Lorem ipsum dolor sit amet"
-      card1description="Aut doloribus maxime est fuga molestiae At eaque debitis et repellat voluptatum"
-      card2hat="10+"
-      card2headline="Lorem ipsum dolor sit amet "
-      card2description="Aut doloribus maxime est fuga molestiae At eaque debitis et repellat voluptatum"
-      card3hat="10+"
-      card3headline="Lorem ipsum dolor sit amet"
-      card3description="Aut doloribus maxime est fuga molestiae At eaque debitis et repellat voluptatum"
-      card4hat="12+"
-      card4headline="Lorem ipsum dolor sit amet"
-      card4description="Aut doloribus maxime est fuga molestiae At eaque debitis et repellat voluptatum"
-    />
+  :hatText="servicesHatText"
+  :headlineText="servicesHeadlineText"
+  :descriptionText="servicesDescriptionText"
+  :servicesBox="servicesBox"
+  />
+
   <CustomersSection 
-      hatText="Our customers"
-      headlineText="Lots of satisfied customers"
+      :hatText="customersDataHat"
+      :headlineText="customersDataHeadline"
       :customerData="cards"
   />
   <ProjectsSection
-      hatText="What’s happening"
-      headlineText="Our latest projects"
+      :hatText="projectsDataHat"
+      :headlineText="projectsDataHeadline"
       buttonText="Get In Touch"
       :projects = "projects"
   />
 
   <CtaSection
-      hatText="Need a successful projects?"
-      headlineText="Helping you overcome your any kind of technology challenges"
-      buttonText="Estimate Projects"
-      ctaButtonUrl="#"      
+      :hatText="ctaSectionHeadlineText"
+      :headlineText="ctaSectionHat"
+      :buttonText="ctaSectionLabel"
+      :ctaButtonUrl="ctaSectionUrl"      
   />
   <TestimonialSection 
-      hatText="What’s happening"
-      headlineText="Our latest projects"
+      :hatText="testimonialDataHat"
+      :headlineText="testimonialDataHeadline"
       :testimonial = "testimonial"
   />
 
@@ -82,8 +80,34 @@ export default {
   data() {
     return {
       cards: [],
+      customersDataHeadline: "",
+      customersDataHat: "",
       projects: [],
+      projectsDataHeadline: "",
+      projectsDataHat: "",
       testimonial: [],
+      testimonialDataHeadline: "",
+      testimonialDataHat: "",
+      heroHeadlineText: "",
+      heroDescriptionText: "",
+      heroMediaUrl: "",
+      heroAltMedia: "",
+      servicesBox: [],
+      servicesHatText: "",
+      servicesHeadlineText: "",
+      servicesDescriptionText: "",
+      technologyHatText: "",
+      technologyDescription: "",
+      technologyGallery: [],
+      ctaSectionHeadlineText:"",
+      ctaSectionHat:"",
+      ctaSectionLabel:"",
+      ctaSectionUrl: "",
+      brandingSectionHeadline: "",
+      brandingSectionDescription: "",
+      brandingSectionFeaturedImage: "",
+      IconList: [],
+
       socialTitle: "Connect with Us",
       socialIcons: 
       [
@@ -106,6 +130,11 @@ export default {
     this.getCustomers();
     this.getProjects();
     this.getTestimonial();
+    this.getHero();
+    this.getServices();
+    this.getTechnologiesSection();
+    this.getCtaSection();
+    this.getBrandingSection();
   },
   methods: {
     getCustomers() {
@@ -113,6 +142,8 @@ export default {
       .get("http://192.168.0.157:1337/api/home?&populate[1]=Customers&populate[2]=Customers.Cards&populate[3]=Customers.Cards.Featured_image&populate[4]=Customers.Cards.Link")
       .then((response) => {
         const cardsData = response.data.data.attributes.Customers.Cards;
+        const headlineText = response.data.data.attributes.Customers.Headline;
+        const hatText = response.data.data.attributes.Customers.Subheadline;
         const formattedCards = cardsData.map((card) => {
           return {
             id: card.Identity,
@@ -124,8 +155,9 @@ export default {
             moreText: "More ─",
           };
         });
-        console.log(cardsData);
         this.cards = formattedCards;
+        this.customersDataHeadline = headlineText;
+        this.customersDataHat = hatText;
       })
       .catch((error) => {
         console.error("Erro ao obter os dados:", error);
@@ -136,6 +168,8 @@ export default {
       .get("http://192.168.0.157:1337/api/home?&populate[1]=Projects&populate[2]=Projects.Cards&populate[3]=Projects.Cards.Featured_image&populate[4]=Projects.Cards.Link")
       .then((response) => {
         const projectsData = response.data.data.attributes.Projects;
+        const headlineText = response.data.data.attributes.Projects.Headline;
+        const hatText = response.data.data.attributes.Projects.Subheadline;
 
         if (projectsData && projectsData.Cards && Array.isArray(projectsData.Cards)) {
           const formattedCards = projectsData.Cards.map((card) => {
@@ -149,7 +183,8 @@ export default {
               moreText: "More ─",
             };
           });
-
+          this.projectsDataHeadline = headlineText;
+          this.projectsDataHat = hatText;
           this.projects = formattedCards;
         } else {
           console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
@@ -164,7 +199,8 @@ export default {
       .get("http://192.168.0.157:1337/api/home?&populate[1]=Testimonial&populate[2]=Testimonial.Cards&populate[3]=Testimonial.Cards.Icon")
       .then((response) => {
         const testimonialData = response.data.data.attributes.Testimonial;
-        console.log(testimonialData);
+        const headlineText = response.data.data.attributes.Testimonial.Headline;
+        const hatText = response.data.data.attributes.Testimonial.Subheadline;
 
         if (testimonialData && testimonialData.Cards && Array.isArray(testimonialData.Cards)) {
           const formattedCards = testimonialData.Cards.map((card) => {
@@ -175,7 +211,8 @@ export default {
               testimonialOffice: card.Position
             };
           });
-
+          this.testimonialDataHeadline = headlineText;
+          this.testimonialDataHat = hatText;
           this.testimonial = formattedCards;
         } else {
           console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
@@ -185,6 +222,127 @@ export default {
         console.error("Erro ao obter os dados:", error);
       });
     },
-  },
+    getHero() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Hero&populate[2]=Hero.CTA&populate[3]=Hero.Media")
+      .then((response) => {
+        
+        const headlineText = response.data.data.attributes.Hero.Headline;
+        const descriptionText = response.data.data.attributes.Hero.Description;
+        const mediaUrl = "http://192.168.0.157:1337" + response.data.data.attributes.Hero.Media.data.attributes.url;
+        const altMedia = response.data.data.attributes.Hero.Media.data.attributes.name;
+
+        this.heroHeadlineText = headlineText;
+        this.heroDescriptionText = descriptionText;
+        this.heroMediaUrl = mediaUrl;
+        this.heroAltMedia = altMedia;
+
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+    getServices() {
+    axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Services&populate[2]=Services.Box")
+      .then((response) => {
+        const servicesBox = response.data.data.attributes.Services.Box;
+        const headlineText = response.data.data.attributes.Services.Headline;
+        const hatText = response.data.data.attributes.Services.Subheadline;
+        const descriptionText = response.data.data.attributes.Services.Description;
+  
+        this.servicesHatText = hatText;
+        this.servicesHeadlineText = headlineText;
+        this.servicesDescriptionText = descriptionText;
+
+        if (Array.isArray(servicesBox)) {
+          this.servicesBox = servicesBox.map((box) => ({
+            Subheadline: box.Subheadline,
+            Headline: box.Headline,
+            Description: box.Description,
+            Style: box.Style, 
+          }));
+        } else {
+          console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+    getTechnologiesSection() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Technologies&populate[2]=Technologies.Gallery")
+      .then((response) => {
+        const technologyGallery = response.data.data.attributes.Technologies.Gallery.data;
+        const headlineText = response.data.data.attributes.Technologies.Subheadline;
+        const descriptionText = response.data.data.attributes.Technologies.Description;
+
+        this.technologyHatText = headlineText;
+        this.technologyDescription = descriptionText;
+
+        if (Array.isArray(technologyGallery)) {
+          this.technologyGallery = technologyGallery.map((galleryItem) => ({
+            url: "http://192.168.0.157:1337" + galleryItem.attributes.url,
+          }));
+          console.log(this.technologyGallery);
+        } else {
+          console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+    getCtaSection() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Sucessful_Projects&populate[2]=Sucessful_Projects.CTA")
+      .then((response) => {
+        
+        const headlineText = response.data.data.attributes.Sucessful_Projects.Headline;
+        const hat = response.data.data.attributes.Sucessful_Projects.Subheadline;
+        const ctaLabel = response.data.data.attributes.Sucessful_Projects.CTA.Label;
+        const ctaUrl = response.data.data.attributes.Sucessful_Projects.CTA.Url;
+
+        this.ctaSectionHeadlineText = headlineText;
+        this.ctaSectionHat = hat;
+        this.ctaSectionLabel = ctaLabel;
+        this.ctaSectionUrl = ctaUrl;
+
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+    getBrandingSection() {
+      axios
+      .get("http://192.168.0.157:1337/api/home?&populate[1]=Highlight&populate[2]=Highlight.Media&populate[3]=Highlight.Icon_list&populate[4]=Highlight.Icon_list.Icon")
+      .then((response) => {
+        
+        const headlineText = response.data.data.attributes.Highlight.Headline;
+        const description = response.data.data.attributes.Highlight.Description;
+        const IconList = response.data.data.attributes.Highlight.Icon_list;
+        const feturedImage = "http://192.168.0.157:1337" + response.data.data.attributes.Highlight.Media.data.attributes.url;
+
+       
+
+        if (Array.isArray(IconList)) {
+          this.IconList = IconList.map((list) => list.Description);
+        } else {
+          console.error("Erro ao obter os dados: Formato inválido dos dados recebidos.");
+        }
+
+        this.brandingSectionHeadline = headlineText;
+        this.brandingSectionDescription = description;
+        this.brandingSectionFeaturedImage = feturedImage;
+
+
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados:", error);
+      });
+    },
+  }, 
 }
 </script>
+

@@ -4,11 +4,11 @@
       <div class="hero-body hero-lg">
         <div class="highlight-box-container">
           <HeroBox
-            headline="About us"
-            description="I have a degree in Systems Information and over 10 years of experience in system developing,8 of these years using .NET, ASP.NET, MVC versions 4/5, C #, Azure platform, WEBSERVICE."
-            button1Text="Get in Touch"
-            button2Text="Discover More"
-            :imageSource="imageSource"
+            :headline="headlineText"
+            :description="descriptionText"
+            :button1Text="button1Text"
+            :button2Text="button2Text"
+            :imageSource="imageSourcePath"
           />
         </div>
       </div>
@@ -24,11 +24,13 @@ export default {
   components: {
     HeroBox
   },
-  data(){
-    return{
-      imageSource: require("@/assets/image-hero.png"),
-    }
-  }
+  props: {
+    headlineText: String,
+    descriptionText: String,
+    button1Text: String,
+    button2Text: String,
+    imageSourcePath: String,
+  },
 }
 </script>
 

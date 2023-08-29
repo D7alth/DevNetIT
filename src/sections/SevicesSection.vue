@@ -17,42 +17,24 @@
         <div class="column col-md-12 col-6 services-column">
           <div class="columns">
             <div class="column col-md-12 col-6 column-gradient-orange">
-              <div class="card">
+              <div v-for="(box, index) in orangeBoxes" :key="index" class="card">
                 <div class="hedline-conteiner">
-                  <div class="hat hat-color-1">{{ card1hat }}</div>
-                    <div class="card-content">
-                      <h3 class="card-headline card-headline-color-1">{{ card1headline }}</h3>
-                      <p class="card-description card-description-color-1">{{ card1description }}</p>
-                    </div>
-                </div>
-              </div>
-            <div class="card">
-                <div class="hedline-conteiner">
-                  <div class="hat hat-color-1">{{ card2hat }}</div>
-                    <div class="card-content">
-                      <h3 class="card-headline card-headline-color-1">{{ card2headline }}</h3>
-                      <p class="card-description card-description-color-1">{{ card2description }}</p>
-                    </div>
+                  <div class="hat hat-color-1">{{ box.Subheadline }}</div>
+                  <div class="card-content">
+                    <h3 class="card-headline card-headline-color-1">{{ box.Headline }}</h3>
+                    <p class="card-description card-description-color-1">{{ box.Description }}</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="column col-md-12 col-6 column-gradient-purple">
-              <div class="card">
+              <div v-for="(box, index) in purpleBoxes" :key="index" class="card">
                 <div class="hedline-conteiner">
-                  <div class="hat hat-color-2">{{ card3hat }}</div>
-                    <div class="card-content">
-                      <h3 class="card-headline card-headline-color-1">{{ card3headline }}</h3>
-                      <p class="card-description card-description-color-1">{{ card3description }}</p>
-                    </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="hedline-conteiner">
-                  <div class="hat hat-color-2">{{ card4hat }}</div>
-                    <div class="card-content">
-                      <h3 class="card-headline card-headline-color-1">{{ card4headline }}</h3>
-                      <p class="card-description card-description-color-1">{{ card4description }}</p>
-                    </div>
+                  <div class="hat hat-color-2">{{ box.Subheadline }}</div>
+                  <div class="card-content">
+                    <h3 class="card-headline card-headline-color-1">{{ box.Headline }}</h3>
+                    <p class="card-description card-description-color-1">{{ box.Description }}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,22 +54,17 @@ export default {
     hatText: String,
     headlineText: String,
     descriptionText: String,
-    card1hat: String, 
-    card1headline: String,
-    card1description: String,
-    card2hat: String, 
-    card2headline: String,
-    card2description: String,
-    card3hat: String, 
-    card3headline: String,
-    card3description: String,
-    card4hat: String, 
-    card4headline: String,
-    card4description: String,
+    servicesBox: Array,
   },
   computed: {
     isDesktop() {
       return window.innerWidth >= 768;
+    },
+    orangeBoxes() {
+      return this.servicesBox.filter(box => box.Style === 'Orange');
+    },
+    purpleBoxes() {
+      return this.servicesBox.filter(box => box.Style === 'Purple');
     },
     components: {
     TextBlock

@@ -15,7 +15,7 @@
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="(logo, index) in logos" :key="index">
-                <img class="logo-image" :src="logo" alt="Logo" />
+                <img class="logo-image" :src="logo.url" alt="Logo" />
               </div>
             </div>
           </div>
@@ -33,19 +33,10 @@ export default {
   props: {
     sectionTitle: String,
     sectionText: String,
+    logos: Array
   },
   data() {
     return {
-      logos: [
-        require("./../assets/logos/angular.png"),
-        require("./../assets/logos/csharp.png"),
-        require("./../assets/logos/css.png"),
-        require("./../assets/logos/dotnet.png"),
-        require("./../assets/logos/html.png"),
-        require("./../assets/logos/jsng.png"),
-        require("./../assets/logos/react.png"),
-        require("./../assets/logos/sql-server.png"),
-      ],
       swiper: null,
     };
   },
