@@ -4,34 +4,46 @@
       <div class="columns">
         <div class="column col-md-12 col-6" v-if="!isDesktop">
           <div class="branding-image-container">
-            <img class="branding-image" :src="featureImage" alt="Branding Image" />
+            <BrandingGallery 
+            :featureGallery="featureGallery"
+            alt="Branding Image2"
+            />
           </div>
         </div>
         <div class="column col-md-12 col-6" v-if="isDesktop">
           <div class="branding-image-container">
-            <img class="branding-image" :src="featureImage" alt="Branding Image" />
+            <BrandingGallery 
+            :featureGallery="featureGallery"
+            alt="Branding Image2"
+            />
           </div>
         </div>
-        <div class="column col-md-12 col-6">
+        <div class="column col-md-12 col-6 branding-text-box">
           <div class="text-box">
             <TextBlock 
               :hat="hatText"
               :headline="headlineText"
               :description="descriptionText"
             />
-            <div class="cta-container">
+            <div class="cta-container" v-for="item in brandingIconList" :key="item.id">
               <div class="cta-icon">
-                <i class="icon icon-flash"></i>
+               <img :src="item.iconUrl" :alt="item.iconTitle">
               </div>
-              <div class="point-text">{{ pointText1 }}</div>
+              <div class="point-text">{{ item.iconTitle }}</div>
             </div>
-            <div class="cta-container">
-              <div class="cta-icon">
-                <i class="icon icon-code"></i>
-              </div>
-              <div class="point-text">{{ pointText2 }}</div>
-            </div>
-            <button class="btn-filled btn-cta">{{ ctaButtonText }}</button>
+            <div class="button-container">
+            <button
+              v-for="(button, index) in cta"
+              :key="index"
+              :class="[ 'btn-cta-fw-pd',
+              button.Style === 'FIlled' ? 'btn-filled' :
+              button.Style === 'Border' ? 'btn-bordered' :
+              button.Style === 'Menu' ? 'btn-menu' : '']"
+              :href="button.Link"
+            >
+              {{ button.Label }}
+            </button>
+          </div>
           </div>
         </div>
       </div>
@@ -41,19 +53,21 @@
 
 <script>
 import TextBlock from "./../components/blocks/TextBlock";
+import BrandingGallery from "./../components/Gallery/BrandingGallery";
+
 export default {
   name: "BrandingSection",
   props: {
     hatText: String,
     headlineText: String,
     descriptionText: String,
-    pointText1: String,
-    pointText2: String,
-    ctaButtonText: String,
-    featureImage: String
+    brandingIconList: Array,
+    cta: Array,
+    featureGallery: Array
   },
   components: {
-    TextBlock
+    TextBlock,
+    BrandingGallery
   },
   computed: {
     isDesktop() {
@@ -119,6 +133,14 @@ export default {
 .column{
   text-align: left;
 }
+.branding-text-box{
+  display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-left: 30px;
+}
 @media (max-width: 767px) {
   .branding-image{
    max-width: 100%;
@@ -130,6 +152,14 @@ export default {
   margin-top: 12px;
   width: 100%;
   border-radius: 50px;
+}
+.branding-text-box{
+  display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-left: 0px;
 }
 }
 

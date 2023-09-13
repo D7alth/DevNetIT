@@ -1,6 +1,6 @@
 <template>
   <div class="footer-top">
-    <hr class="hr-divisor">
+    <br><br>
     <div class="container">
       <div class="columns">
         <div class="column col-md-12 col-6">
@@ -31,7 +31,7 @@
             <div class="social-icons">
               <a v-for="(icon, index) in socialIcons" :key="index" :href="icon.link">
                 <div class="icon-circle">
-                  <i :class="icon.className"></i>
+                  <img class="icon" :src="icon.iconUrl">
                 </div>
               </a>
             </div>
@@ -142,7 +142,9 @@ export default {
   margin-top: 00px;
 }
 .columns{
-  margin-bottom: 30px;
+  margin-bottom: 0px;
+  padding-bottom: 20px;
 }
+
 }
 </style>

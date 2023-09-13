@@ -6,11 +6,16 @@
           <h1 class="headline">{{ headline }}</h1>
           <p class="description">{{ description }}</p>
           <div class="button-container">
-            <button class="btn-filled">
-              {{ button1Text }}
-            </button>
-            <button class="btn-bordered">
-              {{ button2Text }}
+            <button
+              v-for="(button, index) in ctaHero"
+              :key="index"
+              :class="[ '',
+              button.Style === 'FIlled' ? 'btn-filled' :
+              button.Style === 'Border' ? 'btn-bordered' :
+              button.Style === 'Menu' ? 'btn-menu' : '']"
+              :href="button.Link"
+            >
+              {{ button.Label }}
             </button>
           </div>
         </div>
@@ -18,7 +23,10 @@
     </div>
     <div class="column col-md-12 col-6">
       <div class="image-container">
-        <img class="responsive-img" :src="imageSource" alt="" />
+        <img 
+        class="responsive-img"
+        :style="{ width, height, margin, padding }"
+        :src="imageSource" alt="" />
       </div>
     </div>
   </div>
@@ -30,9 +38,12 @@ export default {
   props: {
     headline: String,
     description: String,
-    button1Text: String,
-    button2Text: String,
-    imageSource: String
+    ctaHero: Array,
+    imageSource: String,
+    width: String, 
+    height: String, 
+    margin: String, 
+    padding: String, 
   }
 }
 </script>
@@ -60,6 +71,7 @@ export default {
 .button-container {
   display: flex;
   justify-content: start;
+  flex-direction: row;
   margin-top: 20px;
 }
 

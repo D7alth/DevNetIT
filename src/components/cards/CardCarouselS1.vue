@@ -11,7 +11,7 @@
     <swiper-slide v-for="(card, index) in cards" :key="index">
       <div class="card" @mouseover="card.hover = true" @mouseleave="card.hover = false">
         <div class="card-image">
-          <img :src="card.logoSrc" :alt="card.logoAlt" />
+          <img :src="card.logoUrl" :alt="card.logoAlt" />
         </div>
         <div class="text-container">
           <div class="card-hat" :class="{ 'white-text': card.hover }">
@@ -24,7 +24,7 @@
             <p class="description">{{ card.descriptionText }}</p>
           </div>
           <div class="card-footer">
-            <router-link class="more-link" :to="`/projects/${card.id}`">More</router-link>
+            <router-link class="more-link" :to="`/projects/${card.id}`">More ─</router-link>
           </div>
         </div>
       </div>
@@ -79,6 +79,7 @@ computed: {
 <style scoped>
 .card {
 width: 220px;
+min-height: 260px;
 border: 1px solid var(--variant-dark-white-color);
 border-radius: 8px;
 display: flex;
@@ -151,7 +152,8 @@ color: var(--main-white-color);
 width: 100px;
 }
 .custom-carousel {
-  height: 330px;
+  height: 400px;
+  
 }
 .text-container {
 text-align: left;

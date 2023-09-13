@@ -6,9 +6,12 @@
           <HeroBox
             :headline="headlineText"
             :description="descriptionText"
-            :button1Text="button1Text"
-            :button2Text="button2Text"
+            :ctaHero="ctaHero"
             :imageSource="imageSourcePath"
+            :width="width"
+            :height="height"
+            :margin="margin"
+            :padding="padding"
           />
         </div>
       </div>
@@ -27,9 +30,12 @@ export default {
   props: {
     headlineText: String,
     descriptionText: String,
-    button1Text: String,
-    button2Text: String,
+    ctaHero: Array,
     imageSourcePath: String,
+    width: String,
+    height: String,
+    margin: String,
+    padding: String,
   },
 }
 </script>
@@ -40,6 +46,7 @@ export default {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  min-height: 500px;
 }
 
 .section-container-hero{

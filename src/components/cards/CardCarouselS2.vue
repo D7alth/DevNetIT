@@ -125,7 +125,7 @@ color: var(--main-white-color);
   padding-top: 0px;
 }
 .custom-carousel {
-  height: 330px;
+  height: 400px;
   margin-bottom: 70px;
 }
 

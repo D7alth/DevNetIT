@@ -8,9 +8,17 @@
         <CardCarouselS1 :cards="projects" />
       </div>
       <div class="button-container">
-        <button class="btn-filled btn-cta-fw">
-          {{ buttonText }}
-        </button>
+          <button
+            v-for="(button, index) in cta"
+            :key="index"
+            :class="[ 'btn-cta-fw',
+            button.Style === 'FIlled' ? 'btn-filled' :
+            button.Style === 'Border' ? 'btn-bordered' :
+            button.Style === 'Menu' ? 'btn-menu' : '']"
+            :href="button.Link"
+          >
+            {{ button.Label }}
+          </button>
       </div>
     </div>
   </div>
@@ -29,7 +37,7 @@ export default {
   props: {
     hatText: String,
     headlineText: String,
-    buttonText: String,
+    cta: Array,
     projects: Array
   },
 };
