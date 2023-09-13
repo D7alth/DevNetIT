@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      URL: "http://localhost:1337",
+      URL: "http://3.136.127.214",
       footerLogo: "",
       footerTopSocialIcons: [],
       footerTop: {
@@ -106,8 +106,8 @@ export default {
     },
     async getFooter() {
       try {
-        const response = await axios.get(this.URL + '/api/footer?&populate[0]=Successful_Projects_cta&populate[1]=Footer_Social_Link&populate[2]=Footer_Social_Link.icon&populate[3]=Footer_Logo&populate[4]=Footer_Points&populate[5]=Testimonial');
-        const responseData = response.data.data.attributes;
+        const response = await axios.get(this.URL + '/home');
+        const responseData = response.data;
         console.log(responseData);
         this.successfulProjects = {
           hat: responseData.Successful_Projects_hat,
@@ -126,18 +126,18 @@ export default {
         };  
         if (Array.isArray(responseData.Footer_Social_Link)) {
           this.footerTopSocialIcons = responseData.Footer_Social_Link.map((item) => ({
-            iconUrl: this.URL + item.icon.data.attributes.url,
-            link: item.Footer_Social_Link_URL
+            iconUrl: item.Footer_Social_Link_URL,
+          //  link: item.Footer_Social_Link_URL
           }));
         } else {
           console.error("responseData.clients.data não é uma array.");
         }
-        console.log(responseData.Footer_Logo.data.attributes.url);
+        console.log(responseData.Footer_Logo.url);
         
 
        this.footerContact = {
           description: responseData.Footer_description,    
-          logoUrl: this.URL + responseData.Footer_Logo.data.attributes.url,
+          logoUrl: responseData.Footer_Logo.url,
         }
 
         this.footerTestimonial = {
@@ -160,7 +160,7 @@ export default {
 
         console.log(this.footerSocialLinks);
 
-        this.footerLogo = this.URL + responseData.Footer_Logo.data.attributes.url;
+        this.footerLogo = responseData.Footer_Logo.url;
         if(Array.isArray(responseData.Footer_Points)){
         this.footerPoints = responseData.Footer_Points.map((point) => ({
           id: point.id,
@@ -184,13 +184,13 @@ export default {
     },
     async getHeader() {
       try {
-        const response = await axios.get(this.URL + '/api/header?&populate[0]=Logo&populate[1]=Menu&populate[2]=Header_Point&populate[3]=Header_Point.icon&populate[4]=Header_cta');
-        const responseData = response.data.data.attributes;
+        const response = await axios.get(this.URL + '/header');
+        const responseData = response.data;
         console.log(responseData);
 
-        this.logoUrl = this.URL + responseData.Logo.data.attributes.url;
+        this.logoUrl = responseData.Logo.url;
         this.menuItems = responseData.Menu;
-        this.headerPointIconUrl = this.URL + responseData.Header_Point.icon.data.attributes.url;
+        this.headerPointIconUrl = responseData.Header_Point[0].icon.url;
         this.headerCtaLabel = responseData.Header_cta.Label;
       } catch (error) {
         console.error('Erro ao buscar os dados:', error);

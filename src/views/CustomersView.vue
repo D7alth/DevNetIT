@@ -101,7 +101,7 @@ export default {
 
         if (Array.isArray(responseData.projects.data)) {
           this.projectsCards = responseData.projects.data.map((card) => ({
-            logoUrl: this.URL + card.attributes.Client_logo.data.attributes.url,
+            logoUrl: card.attributes.Client_logo.data.attributes.url,
             id: card.id,
             headlineText: card.attributes.Card_Title,
             descriptionText: card.attributes.Card_Description,
@@ -120,7 +120,7 @@ export default {
         this.hero = {
           headlineText: responseData.Headline,
           descriptionText: responseData.Description,
-          featureImage: this.URL + responseData.Client_logo.data.attributes.url,
+          featureImage: responseData.Client_logo.data.attributes.url,
          // featureImageAlt: responseData.Client_logo.data.attributes.name,
         };
 
@@ -134,7 +134,7 @@ export default {
           hatText: responseData.Technologies_Title,
           description: responseData.Technologies_Description,
           technologyGallery: responseData.Technologies_Gallery.data.map((galleryItem) => ({
-            url: this.URL + galleryItem.attributes.url,
+            url: galleryItem.attributes.url,
           })),
         };
 
@@ -146,12 +146,12 @@ export default {
         };
 
         this.BrandingGallery = responseData.Client_resume_gallery.data.map((item) => ({
-          url: this.URL + item.attributes.url,
+          url: item.attributes.url,
         }));
 
         if (Array.isArray(responseData.Client_points)) {
           this.brandingIconList = responseData.Client_points.map((item) => ({
-            iconUrl: this.URL + item.icon.data.attributes.url,
+            iconUrl: item.icon.data.attributes.url,
             iconTitle: item.Addition_point_text
           }));
         } else {

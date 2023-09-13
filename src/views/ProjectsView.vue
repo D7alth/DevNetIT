@@ -96,7 +96,7 @@ export default {
         this.hero = {
           headlineText: responseData.Headline,
           descriptionText: responseData.Description,
-          featureImage: this.URL + responseData.Client_logo.data.attributes.url,
+          featureImage: responseData.Client_logo.data.attributes.url,
         };
 
         this.ctaHero = responseData.Project_hero_cta.map((item) => ({
@@ -109,7 +109,7 @@ export default {
           hatText: responseData.Technologies_Title,
           description: responseData.Technologies_Description,
           technologyGallery: responseData.Technologies_Gallery.data.map((galleryItem) => ({
-            url: this.URL + galleryItem.attributes.url,
+            url: galleryItem.attributes.url,
           })),
         };
 
@@ -121,12 +121,12 @@ export default {
         };
 
         this.BrandingGallery = responseData.Projects_resume_gallery.data.map((item) => ({
-          url: this.URL + item.attributes.url,
+          url: item.attributes.url,
         }));
 
         if (Array.isArray(responseData.Project_points)) {
           this.brandingIconList = responseData.Project_points.map((item) => ({
-            iconUrl: this.URL + item.icon.data.attributes.url,
+            iconUrl: item.icon.data.attributes.url,
             iconTitle: item.Addition_point_text
           }));
         } else {
