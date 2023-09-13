@@ -79,6 +79,7 @@ export default {
         url: "",
       },
     };
+    
   },
   created() {
     this.getAllData();

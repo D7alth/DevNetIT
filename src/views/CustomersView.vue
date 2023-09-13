@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      URL: 'http://localhost:1337',
+      URL: 'http://3.136.127.214',
 
       projectsCards: [], 
       projects:{

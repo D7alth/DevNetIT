@@ -88,6 +88,7 @@ export default {
       isPopupVisible: false, 
   };
     
+  
   },
   created(){
     this.getFooter();
