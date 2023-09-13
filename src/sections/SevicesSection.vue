@@ -2,7 +2,7 @@
   <div class="ServicesSection section-container" id="services">
     <div class="container-page">
       <div class="columns">
-        <div class="column col-md-12 col-6" v-if="isDesktop">
+        <div class="column col-md-12 col-6">
           <div class="text-box">
             <TextBlock 
               :hat="hatText"
@@ -207,6 +207,11 @@ background: linear-gradient(180deg, rgba(83, 50, 251, 0.151) 0%, rgba(85,50,251,
   font-size: 12px;
   color: var(--main-orange-color);
   margin-bottom: 0px;
-}
+  
+  }
+  .ServicesSection{
+    padding-right:20px ;
+    padding-left: 20px;
+  }
 }
 </style>

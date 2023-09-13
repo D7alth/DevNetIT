@@ -5,7 +5,7 @@
         <div class="columns">
           <div class="column col-md-12 col-6">
             <div class="footer-text-block">
-              <img class="img-responsive img-logo" src="./../assets/devnet-logo-1.png" alt="" srcset="">
+              <img class="img-responsive img-logo" :src="logoUrl" alt="" srcset="">
               <TextBlock
                 :description="descriptionText"
               />
@@ -17,24 +17,10 @@
               <p>{{ contactDescription }}</p>
             </div>
           </div>
-          <div class="column col-md-12 col-2">
+          <div v-for="(item, index) in footerPoints" :key="index" class="column col-md-12 col-2">
             <div class="footer-text">
-              <h4>{{ galleryHeadline }}</h4>
-              <div class="gallery">
-                <div v-for="(item, index) in galleryItems" :key="index" class="gallery-item">
-                  <img :src="item.image" :alt="item.alt" class="gallery-image">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column col-md-12 col-2">
-            <div class="footer-text">
-              <h4>{{ galleryCustomersHeadline }}</h4>
-              <div class="gallery">
-                <div v-for="(item, index) in galleryCustomersItems" :key="index" class="gallery-item">
-                  <img :src="item.image" :alt="item.alt" class="gallery-image">
-                </div>
-              </div>
+              <h4>{{ item.title }}</h4>
+              <p>{{ item.description }}</p>
             </div>
           </div>
         </div>
@@ -55,10 +41,8 @@ export default {
     descriptionText: String,
     contactHeadline: String,
     contactDescription: String,
-    galleryHeadline: String,
-    galleryItems: Array,
-    galleryCustomersHeadline: String,
-    galleryCustomersItems: Array
+    logoUrl: String,
+    footerPoints: Array
   },
 };
 </script>

@@ -1,27 +1,32 @@
 <template>
   <header class="navbar bg-dark ps-4">
     <section class="navbar-section">
-      <a href="..." class="navbar-brand mr-2"><img class="img-logo img-responsive" src="../assets/devnet-logo-1.png" alt="logo"></a>
+      <a href="/" class="navbar-brand mr-2"><img class="img-logo img-responsive" :src="logoUrl" alt="logo"></a>
     </section>
     <section class="navbar-center hide-sm">
       <router-link to="/" class="btn btn-link">Home</router-link>
-      <a href="#services" class="btn btn-link">Services</a>
-      <a href="#projects" class="btn btn-link">Projects</a>
-      <a href="#clients" class="btn btn-link">Clients</a>
-      <router-link to="/customers"> Customers</router-link>
+      <a v-for="menuItem in menuItems" :key="menuItem.id" :href="menuItem.link" class="btn btn-link">{{ menuItem.Label }}</a>
     </section>
     <section class="navbar-section hide-sm">
-      <div class="cta-container">
+      <div class="cta-container" v-for="item in menuIconList" :key="item.id">
         <div class="cta-icon">
-          <i class="icon-svg-gradient icon-phone"></i>
+          <img :src="item.iconUrl" :alt="item.iconTitle">
         </div>
-        <div class="cta-text">
-          (786) 483-0225
-        </div>
+        <div class="point-text">{{ item.iconTitle }}</div>
       </div>
-      <button class="btn-gradient">
-        Call Now
-      </button>
+      <div class="button-container">
+        <button
+          v-for="(button, index) in cta"
+          :key="index"
+          :class="[ 'btn-cta-fw-pd',
+          button.Style === 'FIlled' ? 'btn-filled' :
+          button.Style === 'Border' ? 'btn-bordered' :
+          button.Style === 'Menu' ? 'btn-menu' : '']"
+          :href="button.Link"
+        >
+          {{ button.Label }}
+        </button>
+      </div>
     </section>
     <section class="navbar-section" v-if="isMobile">
       <button class="icon-svg-gradient icon-menu btn-menu-link" @click="toggleMobileMenu"></button>
@@ -29,9 +34,7 @@
       <div class="mobile-menu" :class="{ active: showMobileMenu }">
         <ul class="menu">
           <li> <router-link to="/" @click="closeMobileMenu">Home</router-link></li>
-          <li><a href="#" class="btn btn-link" @click="closeMobileMenu">Services</a></li>
-          <li><a href="#" class="btn btn-link" @click="closeMobileMenu">Projects</a></li>
-          <li><a href="#" class="btn btn-link" @click="closeMobileMenu">Clients</a></li>
+          <li v-for="menuItem in menuItems" :key="menuItem.id" > <a @click="closeMobileMenu" :href="menuItem.link" class="btn btn-link">{{ menuItem.Label }}</a></li>
         </ul>
       </div>
     </section>
@@ -42,7 +45,10 @@
 export default {
   name: 'HeaderSection',
   props: {
-    msg: String
+    msg: String,
+    logoUrl: String,
+    menuItems: Array,
+    menuIconList: Array
   },
   data() {
     return {

@@ -1,22 +1,26 @@
 <template>
   <HeaderSection />
   <router-view/>
+  <CtaSection 
+    :hatText="successfulProjects.hat"
+    :headlineText="successfulProjects.title"
+    :buttonText="successfulProjectsCta.label"
+    :ctaButtonUrl="successfulProjectsCta.link"    
+  />
   <FooterTop
-    contactHat="Contact"
-    contactHeadline="Excited about the project?"
-    phoneTitle="contact by phone"
-    phoneNumber="(786) 483-0225"
-    emailTitle="contact by email"
-    emailAddress="tiago@devnetti.com"
-    :socialTitle="socialTitle"
-    :socialIcons="socialIcons"
+    :contactHat="footerTop.ContactHat"
+    :contactHeadline="footerTop.ContactHeadline"
+    :phoneTitle="footerTop.ContactInfoTitleA"
+    :phoneNumber="footerTop.ContactInfoTitleA2"
+    :emailTitle="footerTop.ContactInfoTitleB"
+    :emailAddress="footerTop.ContactInfoTitleB2"
+    :socialTitle="footerTop.ContactInfoTitleNetwork"
+    :socialIcons="footerTopSocialIcons"
   />
   <FooterBottom
-    descriptionText="I have a degree in Systems Information and over 10 years of experience in system developing, 8 of these years using .NET, ASP.NET, MVC versions 4/5, C #, Azure platform, WEBSERVICE."
-    contactHeadline="Office No 1"
-    contactDescription="1234 North Avenue Luke Lane South Bend, IN 360001"
-    galleryHeadline="Gallery"
-    galleryCustomersHeadline="Gallery"
+    :descriptionText="footerContact.description"
+    :footerPoints="footerPoints"
+    :logoUrl="footerContact.logoUrl"
   /> 
   <ExitPopup v-if="isPopupVisible" @close="closePopup">
     <p class="headline-popup orange">Contact us</p>
@@ -31,7 +35,10 @@ of technology challenges</p>
 </template>
 
 <script>
+import axios from "axios";
+
 import HeaderSection from './sections/HeaderSection.vue'
+import CtaSection from './sections/CtaSection.vue';
 import FooterBottom from './sections/FooterBottom.vue';
 import FooterTop from './sections/FooterTop.vue';
 import ExitPopup from './components/popups/ExitPopup.vue';
@@ -41,29 +48,50 @@ export default {
     HeaderSection,
     FooterBottom,
     FooterTop,
-    ExitPopup
+    ExitPopup,
+    CtaSection
   },
   data() {
     return {
-      isPopupVisible: false,
-      socialTitle: "Connect with Us",
-      socialIcons: 
-      [
-        { 
-          className: "icon icon-twitter", 
-          link: "https://twitter.com/" 
-        },
-        { 
-          lassName: "icon icon-facebook", 
-          link: "https://facebook.com/" 
-        },
-        { 
-          className: "icon icon-instagram", 
-          link: "https://instagram.com/" 
-        },
-      ],
-    };
+      URL: "http://localhost:1337",
+      footerLogo: "",
+      footerTopSocialIcons: [],
+      footerTop: {
+        ContactHat: "",
+        ContactHeadline: "",
+        description: "",
+        ContactInfoTitleA: "",
+        ContactInfoTitleB: "",
+        ContactInfoTitleA2: "",
+        ContactInfoTitleB2: "",
+      },
+      successfulProjects: {
+        hat: "",
+        title: "",
+      },
+      footerContact: {
+        description: "",
+        logoUrl: ""
+      },
+      footerTestimonial: {
+        hat: "",
+        title: "",
+      },
+      successfulProjectsCta: {
+        label: "",
+        link: "",
+        style: "",
+      },
+      footerSocialLinks: [],
+      footerPoints: [],
+      testimonials: [], 
+      isPopupVisible: false, 
+  };
     
+  },
+  created(){
+    this.getFooter();
+    this.getHeader();
   },
   methods: {
     showPopup() {
@@ -75,14 +103,106 @@ export default {
     },
     closePopup() {
       this.isPopupVisible = false;
-    }
-  },
+    },
+    async getFooter() {
+      try {
+        const response = await axios.get(this.URL + '/api/footer?&populate[0]=Successful_Projects_cta&populate[1]=Footer_Social_Link&populate[2]=Footer_Social_Link.icon&populate[3]=Footer_Logo&populate[4]=Footer_Points&populate[5]=Testimonial');
+        const responseData = response.data.data.attributes;
+        console.log(responseData);
+        this.successfulProjects = {
+          hat: responseData.Successful_Projects_hat,
+          title: responseData.Successful_Projects_title,
+        };
+
+        this.footerTop = {
+          ContactHat: responseData.Footer_Contact_Hat,
+          ContactHeadline: responseData.Footer_Contact_Title,
+          ContactInfoTitleA: responseData.Footer_Contact_Info_Title_A,
+          ContactInfoTitleB: responseData.Footer_Contact_Info_Title_B,
+          ContactInfoTitleA2: responseData.Footer_Contact_Info_Title_A2,
+          ContactInfoTitleB2: responseData.Footer_Contact_Info_Title_B2,
+          ContactInfoTitleNetwork: responseData.Footer_Contact_Info_Title_Social,
+          description: responseData.Footer_description,
+        };  
+        if (Array.isArray(responseData.Footer_Social_Link)) {
+          this.footerTopSocialIcons = responseData.Footer_Social_Link.map((item) => ({
+            iconUrl: this.URL + item.icon.data.attributes.url,
+            link: item.Footer_Social_Link_URL
+          }));
+        } else {
+          console.error("responseData.clients.data não é uma array.");
+        }
+        console.log(responseData.Footer_Logo.data.attributes.url);
+        
+
+       this.footerContact = {
+          description: responseData.Footer_description,    
+          logoUrl: this.URL + responseData.Footer_Logo.data.attributes.url,
+        }
+
+        this.footerTestimonial = {
+          hat: responseData.Footer_Testimonial_Hat,
+          title: responseData.Footer_Testimonial_Title,
+        };
+
+        this.successfulProjectsCta = {
+          label: responseData.Successful_Projects_cta.Label,
+          link: responseData.Successful_Projects_cta.Link,
+          style: responseData.Successful_Projects_cta.Style,
+        };
+        console.log(responseData);
+
+        this.footerSocialLinks = responseData.Footer_Social_Link.map((link) => ({
+          id: link.id,
+          url: link.Footer_Social_Link_URL,
+          network: link.Social_Network,
+        }));
+
+        console.log(this.footerSocialLinks);
+
+        this.footerLogo = this.URL + responseData.Footer_Logo.data.attributes.url;
+        if(Array.isArray(responseData.Footer_Points)){
+        this.footerPoints = responseData.Footer_Points.map((point) => ({
+          id: point.id,
+          title: point.Title,
+          description: point.Description,
+        }));
+      }else{
+        console.log("responseData.Footer_Points nao e array")
+      }
+      console.log(this.footerPoints)
+
+        this.testimonials = responseData.Testimonial.map((testimonial) => ({
+          id: testimonial.id,
+          text: testimonial.Testimonial_text,
+          personName: testimonial.Person_name,
+          personCompany: testimonial.Person_Company,
+        }));
+      } catch (error) {
+        console.error('Erro ao buscar os dados:', error);
+      }
+    },
+    async getHeader() {
+      try {
+        const response = await axios.get(this.URL + '/api/header?&populate[0]=Logo&populate[1]=Menu&populate[2]=Header_Point&populate[3]=Header_Point.icon&populate[4]=Header_cta');
+        const responseData = response.data.data.attributes;
+        console.log(responseData);
+
+        this.logoUrl = this.URL + responseData.Logo.data.attributes.url;
+        this.menuItems = responseData.Menu;
+        this.headerPointIconUrl = this.URL + responseData.Header_Point.icon.data.attributes.url;
+        this.headerCtaLabel = responseData.Header_cta.Label;
+      } catch (error) {
+        console.error('Erro ao buscar os dados:', error);
+      }
+    },
   mounted() {
     document.addEventListener('mouseleave', () => {
       this.showPopup();
     });
   }
-}
+  }
+  }
 </script>
 
 <style>
@@ -106,14 +226,18 @@ export default {
   background-color: var(--main-black-color) !important;
 }
 .container-page{
-  max-width: 1200px;
+  max-width: 1250px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .container-page-carousel{
-  max-width: 1200px;
+  max-width: 1250px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -131,7 +255,10 @@ export default {
   padding-bottom:40px;
 }
 .btn-cta-fw{
-  margin-top: 70px;
+  margin-top: 0px;
+  width: 400px;
+}
+.btn-cta-fw-pd{
   width: 400px;
 }
 
@@ -267,8 +394,6 @@ export default {
 .icon {
   font-size: 24px;
   position: relative;
-  margin-bottom: -5px;
-  margin-right: -5px;
   transition: color 0.3s ease; 
   background-repeat: no-repeat;
 }
@@ -330,6 +455,12 @@ export default {
   }
   .pb-6{
     padding-bottom:30px;
+  }
+  .btn-cta-fw-pd{
+    width: 100%;
+  }
+  .btn-bordered{
+    margin-bottom: 20px !important;
   }
 
 }

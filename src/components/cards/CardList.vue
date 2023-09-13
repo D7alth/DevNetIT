@@ -1,7 +1,7 @@
 <template>
   <div class="card" @mouseover="hover = true" @mouseleave="hover = false">
     <div class="logo-container">
-      <img class="logo" :src="item.logoSrc" :alt="item.logoAlt" />
+      <img class="logo" :src="item.logoUrl" :alt="item.logoAlt" />
     </div>
     <div class="text-container" :class="{ 'hover': hover }">
       <div class="hat">{{ item.hatText }}</div>

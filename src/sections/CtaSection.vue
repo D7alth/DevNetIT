@@ -6,11 +6,11 @@
         :headline="headlineText"
         headlineStyle = "headline-white"
       />
-      <a :href="ctaButtonUrl" >
-        <button class="btn-filled">
+    
+        <button :href="ctaButtonUrl" class="btn-filled btn-cta-fw-pd">
             {{ buttonText }}
         </button>
-      </a>
+
     </div>
   </div>  
 </template>
