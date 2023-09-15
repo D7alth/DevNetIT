@@ -113,7 +113,6 @@ export default {
   width: 22px; 
   margin-left: 10px;
   height: 37px;
-  background-image: url('./../assets/icons/flash.svg');
   background-size: contain;
   background-repeat: no-repeat;
 
@@ -121,7 +120,6 @@ export default {
 .icon-code{
   width: 36px; 
   height: 20px;
-  background-image: url('./../assets/icons/code.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }

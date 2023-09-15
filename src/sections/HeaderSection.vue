@@ -5,26 +5,21 @@
     </section>
     <section class="navbar-center hide-sm">
       <router-link to="/" class="btn btn-link">Home</router-link>
-      <a v-for="menuItem in menuItems" :key="menuItem.id" :href="menuItem.link" class="btn btn-link">{{ menuItem.Label }}</a>
+      <a v-for="menuItem in menuItems" :key="menuItem.id" :href="menuItem.link" class="btn btn-link">{{ menuItem.label }}</a>
     </section>
     <section class="navbar-section hide-sm">
-      <div class="cta-container" v-for="item in menuIconList" :key="item.id">
+      <div class="cta-container">
         <div class="cta-icon">
-          <img :src="item.iconUrl" :alt="item.iconTitle">
+          <img :src="iconUrl" :alt="iconTitle">
         </div>
-        <div class="point-text">{{ item.iconTitle }}</div>
+        <div class="point-text">{{ iconTitle }}</div>
       </div>
       <div class="button-container">
         <button
-          v-for="(button, index) in cta"
-          :key="index"
-          :class="[ 'btn-cta-fw-pd',
-          button.Style === 'FIlled' ? 'btn-filled' :
-          button.Style === 'Border' ? 'btn-bordered' :
-          button.Style === 'Menu' ? 'btn-menu' : '']"
-          :href="button.Link"
+          class=" btn-filled"
+          :href="buttonLink"
         >
-          {{ button.Label }}
+          {{ buttonLabel }}
         </button>
       </div>
     </section>
@@ -48,7 +43,11 @@ export default {
     msg: String,
     logoUrl: String,
     menuItems: Array,
-    menuIconList: Array
+    menuIconList: Array,
+    iconUrl: String,
+    iconTitle: String,
+    buttonLink: String,
+    buttonLabel: String,
   },
   data() {
     return {

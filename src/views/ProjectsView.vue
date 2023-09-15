@@ -44,7 +44,7 @@ export default {
   }, 
   data() {
     return {
-      URL: 'http://localhost:1337',
+      URL: 'http://3.136.127.214',
 
       projectsCards: [], 
       projects:{
@@ -79,6 +79,7 @@ export default {
         url: "",
       },
     };
+    
   },
   created() {
     this.getAllData();
@@ -88,15 +89,15 @@ export default {
       try {
         const projectId = this.$route.params.id;
 
-        const response = await axios.get(this.URL + `/api/projects/${projectId}?populate[0]=Project_hero_cta&populate[1]=Projects_resume_gallery&populate[2]=Project_hero_cta&populate[3]=Project_points&populate[4]=Project_points.icon&populate[5]=Client_logo&populate[6]=Project_resume_cta&populate[7]=Technologies_Gallery`);
-        const responseData = response.data.data.attributes;
+        const response = await axios.get(this.URL + `/projects/${projectId}`);
+        const responseData = response.data;
 
         console.log(responseData);
 
         this.hero = {
           headlineText: responseData.Headline,
           descriptionText: responseData.Description,
-          featureImage: this.URL + responseData.Client_logo.data.attributes.url,
+          featureImage: responseData.Client_logo.url,
         };
 
         this.ctaHero = responseData.Project_hero_cta.map((item) => ({
@@ -108,8 +109,8 @@ export default {
         this.technology = {
           hatText: responseData.Technologies_Title,
           description: responseData.Technologies_Description,
-          technologyGallery: responseData.Technologies_Gallery.data.map((galleryItem) => ({
-            url: this.URL + galleryItem.attributes.url,
+          technologyGallery: responseData.Technologies_Gallery.map((galleryItem) => ({
+            url: galleryItem.url,
           })),
         };
 
@@ -117,16 +118,16 @@ export default {
           hatText: responseData.Project_resume_hat,
           headline: responseData.Project_resume_title,
           description: responseData.Project_resume_descritpion,
-          iconList: responseData.Project_points.map((point) => point.Addition_point_text),
+          iconList: responseData.Projects_points.map((point) => point.Addition_point_text),
         };
 
-        this.BrandingGallery = responseData.Projects_resume_gallery.data.map((item) => ({
-          url: this.URL + item.attributes.url,
+        this.BrandingGallery = responseData.Projects_resume_gallery.map((item) => ({
+          url: item.url,
         }));
 
-        if (Array.isArray(responseData.Project_points)) {
-          this.brandingIconList = responseData.Project_points.map((item) => ({
-            iconUrl: this.URL + item.icon.data.attributes.url,
+        if (Array.isArray(responseData.Projects_points)) {
+          this.brandingIconList = responseData.Projects_points.map((item) => ({
+            iconUrl: item.icon.url,
             iconTitle: item.Addition_point_text
           }));
         } else {

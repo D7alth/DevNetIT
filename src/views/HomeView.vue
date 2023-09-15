@@ -63,7 +63,7 @@ export default {
 
   data() {
     return {
-      URL: 'http://localhost:1337',
+      URL: 'http://3.136.127.214',
       clientsCards: [], 
       clients: {
         headline: "",
@@ -108,6 +108,7 @@ export default {
         url: "",
       },
     };
+    
   },
   created() {
     this.getAllData();
@@ -115,18 +116,18 @@ export default {
   methods: {
     async getAllData() {
       try {
-        const response = await axios.get(this.URL + '/api/page?&populate[0]=Hero_cta&populate[1]=Feature_Image&populate[2]=&populate[3]=Page_Technologies_Gallery&populate[4]=Points_Branding&populate[5]=Points_Branding.icon&populate[6]=Branding_cta&populate[7]=Services_Cards&populate[8]=Clients_Cards&populate[9]=Clients_Cards.Client_cta&populate[10]=Clients_Cards.Client_logo&populate[11]=Projects_Cards&populate[12]=Projects_Cards.Project_image&populate[13]=Page_CTA&populate[14]=Branding_Gallery&populate[15]=clients&populate[16]=projects&populate[17]=clients.Client_logo&populate[18]=projects.Client_logo');
-        const responseData = response.data.data.attributes;
+        const response = await axios.get(this.URL + '/start');
+        const responseData = response.data;
 
         console.log(responseData.projects.data);
 
-        if (Array.isArray(responseData.clients.data)) {
-          this.clientsCards = responseData.clients.data.map((card) => ({
-            logoUrl: this.URL + card.attributes.Client_logo.data.attributes.url,
+        if (Array.isArray(responseData.customers)) {
+          this.clientsCards = responseData.customers.map((card) => ({
+            logoUrl: card.Client_logo.url,
             id: card.id,
-            hat: card.attributes.Client_resume_hat,
-            headlineText: card.attributes.Headline,
-            descriptionText: card.attributes.Description,
+            hat: card.Client_resume_hat,
+            headlineText: card.Headline,
+            descriptionText: card.Description,
             moreLink: '/clients/' + card.id,
             moreText: 'More ─',
           }));
@@ -138,17 +139,17 @@ export default {
           hat: responseData.Page_Customers_Hat,
           headline: responseData.Page_Customers_Title,
         }
-        if (Array.isArray(responseData.projects.data)) {
-          this.projectsCards = responseData.projects.data.map((card) => ({
-            logoUrl: this.URL + card.attributes.Client_logo.data.attributes.url,
+        if (Array.isArray(responseData.projects)) {
+          this.projectsCards = responseData.projects.map((card) => ({
+            logoUrl: card.Client_logo.url,
             id: card.id,
-            headlineText: card.attributes.Card_Title,
-            descriptionText: card.attributes.Card_Description,
+            headlineText: card.Card_Title,
+            descriptionText: card.Card_Description,
             moreLink: '/projects/' + card.id,
             moreText: 'More ─',
           }));
         } else {
-          console.error("responseData.clients.data não é uma array.");
+          console.error("responseData.project.data não é uma array.");
         }
 
         this.projects = {
@@ -168,8 +169,8 @@ export default {
         this.hero = {
           headlineText: responseData.Page_Hero_Title,
           descriptionText: responseData.Page_Hero_Description,
-          featureImage: this.URL + responseData.Feature_Image.data.attributes.url,
-          featureImageAlt: responseData.Feature_Image.data.attributes.name,
+          featureImage: responseData.Feature_Image.url,
+          featureImageAlt: responseData.Feature_Image.name,
         };
 
         const servicesData = responseData.Services_Cards;
@@ -188,8 +189,8 @@ export default {
         this.technology = {
           hatText: responseData.Page_Technologies_Title,
           description: responseData.Page_Technologies_Description,
-          technologyGallery: responseData.Page_Technologies_Gallery.data.map((galleryItem) => ({
-            url: this.URL + galleryItem.attributes.url,
+          technologyGallery: responseData.Page_Technologies_Gallery.map((galleryItem) => ({
+            url: galleryItem.url,
           })),
         };
 
@@ -217,16 +218,16 @@ export default {
 
         if (Array.isArray(responseData.Points_Branding)) {
           this.brandingIconList = responseData.Points_Branding.map((item) => ({
-            iconUrl: this.URL + item.icon.data.attributes.url,
+            iconUrl: item.icon.url,
             iconTitle: item.Addition_point_text
           }));
         } else {
-          console.error("responseData.clients.data não é uma array.");
+          console.error("responseData.points.data não é uma array.");
         }
         console.log(this.brandingIconList);
 
-        this.BrandingGallery = responseData.Branding_Gallery.data.map((item) => ({
-          url: this.URL + item.attributes.url,
+        this.BrandingGallery = responseData.Branding_Gallery.map((item) => ({
+          url: item.url,
         }));
 
         if(Array.isArray(responseData.Page_CTA)  && responseData.Page_CTA.length > 0){

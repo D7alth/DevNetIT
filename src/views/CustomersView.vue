@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      URL: 'http://localhost:1337',
+      URL: 'http://3.136.127.214',
 
       projectsCards: [], 
       projects:{
@@ -94,17 +94,17 @@ export default {
       try {
         const customerId = this.$route.params.id;
 
-        const response = await axios.get(this.URL + `/api/clients/${customerId}?&populate[0]=Client_resume_gallery&populate[1]=Client_logo&populate[2]=Client_points&populate[3]=Client_points.icon&populate[4]=Points_Branding.icon&populate[5]=Client_hero_cta&populate[6]=projects&populate[7]=Client_resume_cta&populate[8]=Technologies_Gallery&populate[9]=Related_projects&populate[10]=Related_projects.Project_image&populate[11]=clients&populate[12]=projects&populate[13]=clients.Client_logo&populate[14]=projects.Client_logo`);
-        const responseData = response.data.data.attributes;
+        const response = await axios.get(this.URL + `/customers/${customerId}`);
+        const responseData = response.data;
 
         console.log(responseData);
 
-        if (Array.isArray(responseData.projects.data)) {
-          this.projectsCards = responseData.projects.data.map((card) => ({
-            logoUrl: this.URL + card.attributes.Client_logo.data.attributes.url,
+        if (Array.isArray(responseData.projects)) {
+          this.projectsCards = responseData.projects.map((card) => ({
+            logoUrl: card.Client_logo.url,
             id: card.id,
-            headlineText: card.attributes.Card_Title,
-            descriptionText: card.attributes.Card_Description,
+            headlineText: card.Card_Title,
+            descriptionText: card.Card_Description,
             moreLink: '/projects/' + card.id,
             moreText: 'More ─',
           }));
@@ -120,7 +120,7 @@ export default {
         this.hero = {
           headlineText: responseData.Headline,
           descriptionText: responseData.Description,
-          featureImage: this.URL + responseData.Client_logo.data.attributes.url,
+          featureImage: responseData.Client_logo.url,
          // featureImageAlt: responseData.Client_logo.data.attributes.name,
         };
 
@@ -133,8 +133,8 @@ export default {
         this.technology = {
           hatText: responseData.Technologies_Title,
           description: responseData.Technologies_Description,
-          technologyGallery: responseData.Technologies_Gallery.data.map((galleryItem) => ({
-            url: this.URL + galleryItem.attributes.url,
+          technologyGallery: responseData.Technologies_Gallery.map((galleryItem) => ({
+            url: galleryItem.url,
           })),
         };
 
@@ -145,13 +145,13 @@ export default {
           iconList: responseData.Client_points.map((point) => point.Addition_point_text),
         };
 
-        this.BrandingGallery = responseData.Client_resume_gallery.data.map((item) => ({
-          url: this.URL + item.attributes.url,
+        this.BrandingGallery = responseData.Client_resume_gallery.map((item) => ({
+          url: item.url,
         }));
 
         if (Array.isArray(responseData.Client_points)) {
           this.brandingIconList = responseData.Client_points.map((item) => ({
-            iconUrl: this.URL + item.icon.data.attributes.url,
+            iconUrl: item.icon.url,
             iconTitle: item.Addition_point_text
           }));
         } else {
@@ -186,6 +186,9 @@ export default {
     max-width: 300px !important;
     max-height: 100% !important;
     margin-bottom: 0 !important;
+}
+.cta-icon img {
+    width: 34px;
 }
 
 @media (max-width: 767px) {
