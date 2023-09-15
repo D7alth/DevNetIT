@@ -61,6 +61,8 @@ export default {
 .img-full {
   width: 100%;
   height: 240px;
+  min-height: 270px;
+  max-height: 270px;
   display: block;
   object-fit: cover;
   border-radius: 10px;
@@ -69,6 +71,7 @@ export default {
 .img-cropped {
   width: 100%;
   height: 100%;
+  max-height: 270px;
   padding-bottom: 0%;
   object-fit: cover;
   display: block;

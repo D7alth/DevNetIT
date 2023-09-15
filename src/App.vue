@@ -1,5 +1,13 @@
 <template>
-  <HeaderSection />
+  <HeaderSection
+  :logoUrl="logoUrl"
+  :menuItems="headerMenu"
+  :menuIconList="headerPoint"
+  :iconUrl="headerPointIconUrl"
+  :iconTitle="headerPointLabel"
+  :buttonLink=" buttonLink"
+  :buttonLabel="headerCtaLabel"
+  />
   <router-view/>
   <CtaSection 
     :hatText="successfulProjects.hat"
@@ -54,6 +62,14 @@ export default {
   data() {
     return {
       URL: "http://3.136.127.214",
+      headerMenu: [],
+      headerPointLabel: "",
+      headerPointIconUrl: "", 
+      headerCtaLabel: "",
+      header: {
+        logoUrl: "",
+      },
+      buttonLink:"",
       footerLogo: "",
       footerTopSocialIcons: [],
       footerTop: {
@@ -189,10 +205,22 @@ export default {
         const responseData = response.data;
         console.log(responseData);
 
+        
         this.logoUrl = responseData.Logo.url;
-        this.menuItems = responseData.Menu;
+
         this.headerPointIconUrl = responseData.Header_Point[0].icon.url;
         this.headerCtaLabel = responseData.Header_cta.Label;
+        this.buttonLink = responseData.Header_cta.Link;
+        this.headerPointLabel = responseData.Header_Point[0].Addition_point_text;
+
+        if (Array.isArray(responseData.Menu)) {
+          this.headerMenu = responseData.Menu.map((item) => ({
+            label: item.Label,
+            link: item.Link,
+          }));
+        } else {
+          console.error("responseData.clients.data não é uma array.");
+        }
       } catch (error) {
         console.error('Erro ao buscar os dados:', error);
       }
@@ -374,6 +402,11 @@ export default {
   margin-top: 10px;
 }
 /* icons */
+
+#app > div.brandingShowcase.section-container > div > div > div.column.col-md-12.col-6.branding-text-box > div > div > div.cta-icon > img {
+    width: 34px;
+}
+
 .icon-circle {
   display: flex;
   justify-content: center;

@@ -121,13 +121,13 @@ export default {
 
         console.log(responseData.projects.data);
 
-        if (Array.isArray(responseData.clients.data)) {
-          this.clientsCards = responseData.clients.data.map((card) => ({
-            logoUrl: card.attributes.Client_logo.url,
+        if (Array.isArray(responseData.customers)) {
+          this.clientsCards = responseData.customers.map((card) => ({
+            logoUrl: card.Client_logo.url,
             id: card.id,
-            hat: card.attributes.Client_resume_hat,
-            headlineText: card.attributes.Headline,
-            descriptionText: card.attributes.Description,
+            hat: card.Client_resume_hat,
+            headlineText: card.Headline,
+            descriptionText: card.Description,
             moreLink: '/clients/' + card.id,
             moreText: 'More ─',
           }));
@@ -139,17 +139,17 @@ export default {
           hat: responseData.Page_Customers_Hat,
           headline: responseData.Page_Customers_Title,
         }
-        if (Array.isArray(responseData.projects.data)) {
-          this.projectsCards = responseData.projects.data.map((card) => ({
-            logoUrl: card.attributes.Client_logo.url,
+        if (Array.isArray(responseData.projects)) {
+          this.projectsCards = responseData.projects.map((card) => ({
+            logoUrl: card.Client_logo.url,
             id: card.id,
-            headlineText: card.attributes.Card_Title,
-            descriptionText: card.attributes.Card_Description,
+            headlineText: card.Card_Title,
+            descriptionText: card.Card_Description,
             moreLink: '/projects/' + card.id,
             moreText: 'More ─',
           }));
         } else {
-          console.error("responseData.clients.data não é uma array.");
+          console.error("responseData.project.data não é uma array.");
         }
 
         this.projects = {
@@ -189,8 +189,8 @@ export default {
         this.technology = {
           hatText: responseData.Page_Technologies_Title,
           description: responseData.Page_Technologies_Description,
-          technologyGallery: responseData.Page_Technologies_Gallery.data.map((galleryItem) => ({
-            url: galleryItem.attributes.url,
+          technologyGallery: responseData.Page_Technologies_Gallery.map((galleryItem) => ({
+            url: galleryItem.url,
           })),
         };
 
@@ -222,12 +222,12 @@ export default {
             iconTitle: item.Addition_point_text
           }));
         } else {
-          console.error("responseData.clients.data não é uma array.");
+          console.error("responseData.points.data não é uma array.");
         }
         console.log(this.brandingIconList);
 
-        this.BrandingGallery = responseData.Branding_Gallery.data.map((item) => ({
-          url: item.attributes.url,
+        this.BrandingGallery = responseData.Branding_Gallery.map((item) => ({
+          url: item.url,
         }));
 
         if(Array.isArray(responseData.Page_CTA)  && responseData.Page_CTA.length > 0){

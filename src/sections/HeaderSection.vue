@@ -5,19 +5,22 @@
     </section>
     <section class="navbar-center hide-sm">
       <router-link to="/" class="btn btn-link">Home</router-link>
-      <a href="#services" class="btn btn-link">Services</a>
-      <a href="#projects" class="btn btn-link">Projects</a>
-      <a href="#clients" class="btn btn-link">Clients</a>
-      <router-link to="/customers"> Customers</router-link>
+      <a v-for="menuItem in menuItems" :key="menuItem.id" :href="menuItem.link" class="btn btn-link">{{ menuItem.label }}</a>
     </section>
     <section class="navbar-section hide-sm">
-      <div class="cta-container" v-for="item in menuIconList" :key="item.id">
+      <div class="cta-container">
         <div class="cta-icon">
-          <i class="icon-svg-gradient icon-phone"></i>
+          <img :src="iconUrl" :alt="iconTitle">
         </div>
-        <div class="cta-text">
-          (786) 483-0225
-        </div>
+        <div class="point-text">{{ iconTitle }}</div>
+      </div>
+      <div class="button-container">
+        <button
+          class=" btn-filled"
+          :href="buttonLink"
+        >
+          {{ buttonLabel }}
+        </button>
       </div>
     </section>
     <section class="navbar-section" v-if="isMobile">
@@ -37,7 +40,14 @@
 export default {
   name: 'HeaderSection',
   props: {
-    msg: String
+    msg: String,
+    logoUrl: String,
+    menuItems: Array,
+    menuIconList: Array,
+    iconUrl: String,
+    iconTitle: String,
+    buttonLink: String,
+    buttonLabel: String,
   },
   data() {
     return {
