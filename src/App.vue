@@ -311,6 +311,10 @@ export default {
 .pb-6{
   padding-bottom:50px;
 }
+section.navbar-center.hide-sm {
+    width: 33%;
+    justify-content: space-between;
+}
 
 .img-logo{
   width: 200px; 
