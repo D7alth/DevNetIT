@@ -17,9 +17,8 @@
       <div class="button-container">
         <button
           class=" btn-filled"
-          :href="buttonLink"
         >
-          {{ buttonLabel }}
+        <a :href="buttonLink" style="color: white">{{ buttonLabel }}</a>
         </button>
       </div>
     </section>

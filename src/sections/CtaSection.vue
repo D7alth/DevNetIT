@@ -8,7 +8,7 @@
       />
     
         <button :href="ctaButtonUrl" class="btn-filled btn-cta-fw-pd">
-            {{ buttonText }}
+          <a  :href="ctaButtonUrl"> {{ buttonText }} </a>
         </button>
 
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="our-customers-section section-container">
+  <div class="our-customers-section section-container" id="clients">
     <div class="container-page">
       <div class="headline-container">
         <TextBlock 

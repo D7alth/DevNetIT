@@ -5,7 +5,7 @@
   :menuIconList="headerPoint"
   :iconUrl="headerPointIconUrl"
   :iconTitle="headerPointLabel"
-  :buttonLink=" buttonLink"
+  :buttonLink="buttonLink"
   :buttonLabel="headerCtaLabel"
   />
   <router-view/>
@@ -372,7 +372,12 @@ export default {
   cursor: pointer;
   margin-left: 10px;
 }
-
+.btn-bordered > a{
+  color:#01010F !important;
+}
+.btn-filled > a{
+  color: #fff;
+}
 .btn-filled:hover {
   color: var(--main-white-color);
 }

@@ -13,9 +13,8 @@
               button.Style === 'FIlled' ? 'btn-filled' :
               button.Style === 'Border' ? 'btn-bordered' :
               button.Style === 'Menu' ? 'btn-menu' : '']"
-              :href="button.Link"
             >
-              {{ button.Label }}
+            <a :href="button.Link"> {{ button.Label }}</a>
             </button>
           </div>
         </div>
@@ -84,6 +83,9 @@ export default {
   cursor: pointer;
   margin-right: 10px;
 }
+.btn-filled > a{
+  color: white;
+}
 
 .btn-bordered {
   border: 2px solid var(--main-grey-color);
@@ -93,6 +95,10 @@ export default {
   background: none;
   cursor: pointer;
   margin-left: 10px;
+}
+
+.btn-bordered > a{
+  color: white;
 }
 
 .btn-filled:hover {
