@@ -262,12 +262,12 @@ export default {
 }
 .container-page-carousel{
   max-width: 1250px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
 }
-.section-container{
+.section-container {
   display: flex;
   background-position: center;
   background-size: cover;
@@ -277,8 +277,9 @@ export default {
   align-content: center;
   justify-content: center;
   align-items: center;
-  padding-top:40px;
-  padding-bottom:40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
 }
 .btn-cta-fw{
   margin-top: 0px;
@@ -477,8 +478,8 @@ section.navbar-center.hide-sm {
   }
   .container-page-carousel{
     max-width:100%;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .container-page{
     max-width: 100%;
