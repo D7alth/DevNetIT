@@ -15,9 +15,8 @@
             button.Style === 'FIlled' ? 'btn-filled' :
             button.Style === 'Border' ? 'btn-bordered' :
             button.Style === 'Menu' ? 'btn-menu' : '']"
-            :href="button.Link"
           >
-            {{ button.Label }}
+          <a :href="button.Link"> {{ button.Label }} </a>
           </button>
       </div>
     </div>

@@ -17,9 +17,8 @@
       <div class="button-container">
         <button
           class=" btn-filled"
-          :href="buttonLink"
         >
-          {{ buttonLabel }}
+        <a :href="buttonLink" style="color: white">{{ buttonLabel }}</a>
         </button>
       </div>
     </section>
@@ -29,7 +28,9 @@
       <div class="mobile-menu" :class="{ active: showMobileMenu }">
         <ul class="menu">
           <li> <router-link to="/" @click="closeMobileMenu">Home</router-link></li>
-          <li v-for="menuItem in menuItems" :key="menuItem.id" > <a @click="closeMobileMenu" :href="menuItem.link" class="btn btn-link">{{ menuItem.Label }}</a></li>
+          <li v-for="menuItem in menuItems" :key="menuItem.id">
+            <a @click="closeMobileMenu" :href="menuItem.link" class="btn btn-link">{{ menuItem.label }}</a>
+          </li>
         </ul>
       </div>
     </section>

@@ -15,7 +15,10 @@
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="(logo, index) in logos" :key="index">
-                <img class="logo-image" :src="logo.url" alt="Logo" />
+                <div class="logo-container">
+                  <img class="logo-image" :src="logo.url" alt="Logo" />
+                  <div class="tooltip">{{ logo.label }}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -77,6 +80,23 @@ export default {
 </script>
 
 <style scoped>
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 0px; /* Ajuste a posição vertical conforme necessário */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 999999999;
+}
+
+.logo-container:hover .tooltip {
+  display: block;
+}
 .technology-section {
   text-align: center;
 }
