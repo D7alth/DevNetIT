@@ -119,8 +119,6 @@ export default {
         const response = await axios.get(this.URL + '/start');
         const responseData = response.data;
 
-        console.log(responseData.projects.data);
-
         if (Array.isArray(responseData.customers)) {
           this.clientsCards = responseData.customers.map((card) => ({
             logoUrl: card.Client_logo.url,
@@ -191,6 +189,7 @@ export default {
           description: responseData.Page_Technologies_Description,
           technologyGallery: responseData.Page_Technologies_Gallery.map((galleryItem) => ({
             url: galleryItem.url,
+            label: galleryItem.alternativeText
           })),
         };
 
@@ -224,7 +223,6 @@ export default {
         } else {
           console.error("responseData.points.data não é uma array.");
         }
-        console.log(this.brandingIconList);
 
         this.BrandingGallery = responseData.Branding_Gallery.map((item) => ({
           url: item.url,

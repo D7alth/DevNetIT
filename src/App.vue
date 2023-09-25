@@ -125,7 +125,7 @@ export default {
       try {
         const response = await axios.get(this.URL + '/home');
         const responseData = response.data;
-        console.log(responseData);
+
         this.successfulProjects = {
           hat: responseData.Successful_Projects_hat,
           title: responseData.Successful_Projects_title,
@@ -143,13 +143,14 @@ export default {
         };  
         if (Array.isArray(responseData.Footer_Social_Link)) {
           this.footerTopSocialIcons = responseData.Footer_Social_Link.map((item) => ({
-            iconUrl: item.Footer_Social_Link_URL,
-          //  link: item.Footer_Social_Link_URL
+            iconUrl: item.social_network_logo[0].url, 
           }));
         } else {
-          console.error("responseData.clients.data não é uma array.");
+          console.error("responseData.Footer_Social_Link não é um array.");
         }
-        console.log(responseData.Footer_Logo.url);
+
+        console.log(responseData.Footer_Social_Link[0].social_network_logo[0].url);
+
         
 
        this.footerContact = {
@@ -167,7 +168,6 @@ export default {
           link: responseData.Successful_Projects_cta.Link,
           style: responseData.Successful_Projects_cta.Style,
         };
-        console.log(responseData);
 
         this.footerSocialLinks = responseData.Footer_Social_Link.map((link) => ({
           id: link.id,
@@ -175,7 +175,7 @@ export default {
           network: link.Social_Network,
         }));
 
-        console.log(this.footerSocialLinks);
+
 
         this.footerLogo = responseData.Footer_Logo.url;
         if(Array.isArray(responseData.Footer_Points)){
@@ -187,7 +187,6 @@ export default {
       }else{
         console.log("responseData.Footer_Points nao e array")
       }
-      console.log(this.footerPoints)
 
         this.testimonials = responseData.Testimonial.map((testimonial) => ({
           id: testimonial.id,
@@ -203,8 +202,6 @@ export default {
       try {
         const response = await axios.get(this.URL + '/header');
         const responseData = response.data;
-        console.log(responseData);
-
         
         this.logoUrl = responseData.Logo.url;
 

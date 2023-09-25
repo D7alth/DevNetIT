@@ -97,8 +97,6 @@ export default {
         const response = await axios.get(this.URL + `/customers/${customerId}`);
         const responseData = response.data;
 
-        console.log(responseData);
-
         if (Array.isArray(responseData.projects)) {
           this.projectsCards = responseData.projects.map((card) => ({
             logoUrl: card.Client_logo.url,

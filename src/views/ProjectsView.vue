@@ -92,8 +92,6 @@ export default {
         const response = await axios.get(this.URL + `/projects/${projectId}`);
         const responseData = response.data;
 
-        console.log(responseData);
-
         this.hero = {
           headlineText: responseData.Headline,
           descriptionText: responseData.Description,
