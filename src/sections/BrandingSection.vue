@@ -32,7 +32,8 @@
               <div class="point-text">{{ item.iconTitle }}</div>
             </div>
             <div class="button-container">
-            <button
+            <a
+              :href="button.Link"
               v-for="(button, index) in cta"
               :key="index"
               :class="[ 'btn-cta-fw-pd',
@@ -41,8 +42,8 @@
               button.Style === 'Menu' ? 'btn-menu' : '']"
              
             >
-              <a :href="button.Link"> {{ button.Label }} </a>
-            </button>
+            {{ button.Label }}
+            </a>
           </div>
           </div>
         </div>

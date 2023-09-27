@@ -141,17 +141,15 @@ export default {
           ContactInfoTitleNetwork: responseData.Footer_Contact_Info_Title_Social,
           description: responseData.Footer_description,
         };  
+        console.log(responseData.Footer_Social_Link);
         if (Array.isArray(responseData.Footer_Social_Link)) {
           this.footerTopSocialIcons = responseData.Footer_Social_Link.map((item) => ({
             iconUrl: item.social_network_logo[0].url, 
+            link: item.Footer_Social_Link_URL
           }));
         } else {
           console.error("responseData.Footer_Social_Link não é um array.");
         }
-
-        console.log(responseData.Footer_Social_Link[0].social_network_logo[0].url);
-
-        
 
        this.footerContact = {
           description: responseData.Footer_description,    
@@ -245,6 +243,12 @@ export default {
 *{
   font-family: 'DM Sans', sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
+a:visited{
+  color: white;
+}
 .orange{
   color: var(--main-orange-color);
 }
@@ -282,11 +286,14 @@ export default {
   padding-left: 10px;
 }
 .btn-cta-fw{
-  margin-top: 0px;
   width: 400px;
+  display: block;
+  text-align: center;
 }
-.btn-cta-fw-pd{
+.btn-cta-fw-pd {
   width: 400px;
+  display: block;
+  text-align: center;
 }
 
 .ps-1{
@@ -503,6 +510,12 @@ section.navbar-center.hide-sm {
   .btn-bordered{
     margin-bottom: 20px !important;
   }
+  .btn-filled {
+    text-align: center;
+  }
+  .btn-bordered {
+  text-align: center;
+}
 
 }
 </style>

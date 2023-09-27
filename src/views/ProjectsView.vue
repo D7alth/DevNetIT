@@ -109,6 +109,8 @@ export default {
           description: responseData.Technologies_Description,
           technologyGallery: responseData.Technologies_Gallery.map((galleryItem) => ({
             url: galleryItem.url,
+            label: galleryItem.alternativeText
+
           })),
         };
 
