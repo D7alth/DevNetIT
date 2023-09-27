@@ -12,14 +12,16 @@
         <div class="cta-icon">
           <img :src="iconUrl" :alt="iconTitle">
         </div>
-        <div class="point-text">{{ iconTitle }}</div>
+        <a :href="buttonLink" style="color: white" class="point-text">{{ iconTitle }}</a>
       </div>
       <div class="button-container">
-        <button
+        <a
           class=" btn-filled"
+          :href="buttonLink"
+          style="color: white"
         >
-        <a :href="buttonLink" style="color: white">{{ buttonLabel }}</a>
-        </button>
+       {{ buttonLabel }}
+      </a>
       </div>
     </section>
     <section class="navbar-section" v-if="isMobile">

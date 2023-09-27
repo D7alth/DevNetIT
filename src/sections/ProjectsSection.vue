@@ -8,16 +8,17 @@
         <CardCarouselS1 :cards="projects" />
       </div>
       <div class="button-container">
-          <button
+          <a
             v-for="(button, index) in cta"
             :key="index"
             :class="[ 'btn-cta-fw',
             button.Style === 'FIlled' ? 'btn-filled' :
             button.Style === 'Border' ? 'btn-bordered' :
             button.Style === 'Menu' ? 'btn-menu' : '']"
+            :href="button.Link"
           >
-          <a :href="button.Link"> {{ button.Label }} </a>
-          </button>
+         {{ button.Label }}
+          </a>
       </div>
     </div>
   </div>
@@ -129,6 +130,12 @@ export default {
 .cta-button:hover {
   background-color: var(--main-yellow-color);
 }
-
+.button-container {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
 
 </style>

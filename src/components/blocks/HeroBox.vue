@@ -6,16 +6,17 @@
           <h1 class="headline">{{ headline }}</h1>
           <p class="description">{{ description }}</p>
           <div class="button-container">
-            <button
+            <a
               v-for="(button, index) in ctaHero"
               :key="index"
               :class="[ '',
               button.Style === 'FIlled' ? 'btn-filled' :
               button.Style === 'Border' ? 'btn-bordered' :
               button.Style === 'Menu' ? 'btn-menu' : '']"
+              :href="button.Link"
             >
-            <a :href="button.Link"> {{ button.Label }}</a>
-            </button>
+           {{ button.Label }}
+          </a>
           </div>
         </div>
       </div>
