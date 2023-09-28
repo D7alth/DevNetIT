@@ -29,6 +29,15 @@
       <div class="mobile-overlay" v-show="showMobileMenu" @click="toggleMobileMenu"></div>
       <div class="mobile-menu" :class="{ active: showMobileMenu }">
         <ul class="menu">
+          <div class="button-container menu-button-container">
+        <a
+          class="btn-menu btn-filled"
+          :href="buttonLink"
+          style="color: white"
+        >
+       {{ buttonLabel }}
+      </a>
+      </div>
           <li> <router-link to="/" @click="closeMobileMenu">Home</router-link></li>
           <li v-for="menuItem in menuItems" :key="menuItem.id">
             <a @click="closeMobileMenu" :href="menuItem.link" class="btn btn-link">{{ menuItem.label }}</a>
@@ -74,7 +83,12 @@ export default {
 </script>
 
 <style scoped>
-
+.menu-button-container{
+  margin-bottom: 20px;
+}
+.btn-menu{
+  margin: 0px;
+}
 .btn-menu-link{
   background-color: transparent;
   border: none;

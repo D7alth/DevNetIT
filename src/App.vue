@@ -285,6 +285,14 @@ a:visited{
   padding-bottom: 20px;
   padding-left: 10px;
 }
+header.navbar.bg-dark.ps-4 {
+    position: fixed;
+    width: 100%;
+    z-index: 90;
+}
+div#hero {
+    padding-top: 100px;
+}
 .btn-cta-fw{
   width: 400px;
   display: block;
